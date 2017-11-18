@@ -23,67 +23,55 @@ public class ParkingLotMain {
 	public ParkingLotMain() {
 		System.out.println("Input: ");
 		Scanner q = new Scanner(System.in);
+		String scannedInput = q.nextLine();
 		
 		String input;
 		String question;
 		String pattern= "^[0-9]";
 		
-		if (q.nextLine().startsWith("create_parking_lot")) {
+		if (scannedInput.startsWith("create_parking_lot")) {
 			question = "create_parking_lot";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			if (input.matches(pattern))
 				createParkingLot(Integer.parseInt(input));
 			// else
-		} else if (q.nextLine().startsWith("park")) {
+		} else if (scannedInput.startsWith("park")) {
 //			park KA-01-HH-1234 White
 			question = "park";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			String[] inputs = input.split("\\s");
 			if (inputs.length == 2)
 				registerCar(inputs[0], inputs[1]);
 			// else
-		} else if (q.nextLine().startsWith("leave")) {
+		} else if (scannedInput.startsWith("leave")) {
 //			leave 4
 			question = "leave";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			if (input.matches(pattern))
 				removeCar(Integer.parseInt(input));
 			// else
-		} else if (q.nextLine().startsWith("Status")) {
+		} else if (scannedInput.startsWith("Status")) {
 //			Status
 			checkStatus();
-		} else if (q.nextLine().startsWith("registration_numbers_for_cars_with_colour")) {
+		} else if (scannedInput.startsWith("registration_numbers_for_cars_with_colour")) {
 //			registration_numbers_for_cars_with_colour White
 			question = "registration_numbers_for_cars_with_colour";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			getRegistrationNumbersByColor(Color.getColor(input));
-		} else if (q.nextLine().startsWith("slot_numbers_for_cars_with_colour")) {
+		} else if (scannedInput.startsWith("slot_numbers_for_cars_with_colour")) {
 //			slot_numbers_for_cars_with_colour White
 			question = "slot_numbers_for_cars_with_colour";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			getSlotNumbersByColor(Color.getColor(input));
-		} else if (q.nextLine().startsWith("slot_number_for_registration_number")) {
+		} else if (scannedInput.startsWith("slot_number_for_registration_number")) {
 //			slot_number_for_registration_number KA-01-HH-3141
 			question = "slot_number_for_registration_number";
-			input = getInput(q.nextLine(), question);
+			input = getInput(scannedInput, question);
 			getSlotNumbersByRegistrationNumber(input);
 		}
 
 		q.close();
 	}
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	public List<Car> getOccupiedParkingSlots() {

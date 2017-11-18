@@ -1,2 +1,3 @@
-# gojek-parkinglot
-Gojek - Parking Lot System
+# parkinglot
+Parking Lot System
+Used for Gojek Initial Test

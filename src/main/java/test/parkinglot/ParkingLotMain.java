@@ -44,28 +44,23 @@ public class ParkingLotMain {
 			} else if (scannedInput.startsWith("leave")) {
 //				leave 4
 				question = "leave";
-//				varInput = getVarInput(scannedInput, question);
-//				if (varInput.matches(pattern))
-//					removeCar(Integer.parseInt(varInput));
+				response = removeCar(getVarInput(scannedInput, question));
 				// else
 			} else if (scannedInput.startsWith("Status")) {
 //				Status
-				checkStatus();
+				response = checkStatus();
 			} else if (scannedInput.startsWith("registration_numbers_for_cars_with_colour")) {
 //				registration_numbers_for_cars_with_colour White
 				question = "registration_numbers_for_cars_with_colour";
-//				varInput = getVarInput(scannedInput, question);
-//				getRegistrationNumbersByColor(Color.getColor(varInput));
+				getRegistrationNumbersByColor(Color.getColor(getVarInput(scannedInput, question)));
 			} else if (scannedInput.startsWith("slot_numbers_for_cars_with_colour")) {
 //				slot_numbers_for_cars_with_colour White
 				question = "slot_numbers_for_cars_with_colour";
-//				varInput = getVarInput(scannedInput, question);
-//				getSlotNumbersByColor(Color.getColor(varInput));
+				getSlotNumbersByColor(Color.getColor(getVarInput(scannedInput, question)));
 			} else if (scannedInput.startsWith("slot_number_for_registration_number")) {
 //				slot_number_for_registration_number KA-01-HH-3141
 				question = "slot_number_for_registration_number";
-//				varInput = getVarInput(scannedInput, question);
-//				getSlotNumbersByRegistrationNumber(varInput);
+				getSlotNumbersByRegistrationNumber(getVarInput(scannedInput, question));
 			} else if (scannedInput.equals("exit")
 					|| scannedInput.equals("quit")) {
 				stop = true;
@@ -113,33 +108,40 @@ public class ParkingLotMain {
 	public String registerCar(String varInput) {
 		String[] inputs = varInput.split("\\s");
 		if (inputs.length == 2) {
-			// set car
-			Car car = new Car();
-			car.setRegistrationNumber(inputs[0]);
-			car.setColor(Color.getColor(inputs[1]));
-			
-//			ParkingLot[] usedParkingLots = checkStatus();
-			for (int i = 0; i < parkingLots.length; i ++) {
-				if (parkingLots[i].getCar() == null) {
-					parkingLots[i].setCar(car);
-					break;
+				for (int i = 0; i < parkingLots.length; i ++) {
+					if (parkingLots[i].getCar() == null) {
+						parkingLots[i].setCar(new Car(inputs[0], Color.getColor(inputs[1])));
+						return "Allocated slot number: " + parkingLots[i].getSlotNumber();
+					}
 				}
-			}
+				return "Sorry, parking lot is full";
 		} else {
 			return "Variable input must contains exact 2 premises";
 		}
+	}
 
-		int parkingLotNumber = 0;
-		System.out.println("Allocated slot number: " + parkingLotNumber);
-		System.out.println("Sorry, parking lot is full");
+	public String removeCar(String varInput) {
+		if (varInput.matches(pattern)) {
+			int toBeRemovedSlotNumber = Integer.parseInt(varInput);
+			if (toBeRemovedSlotNumber > 0 
+					&& toBeRemovedSlotNumber <= parkingLots.length) {
+				for (int i = 0; i < parkingLots.length; i ++) {
+					if (parkingLots[i].getSlotNumber() == toBeRemovedSlotNumber) {
+						parkingLots[i].setCar(null);
+						return "Slot number " + toBeRemovedSlotNumber + " is free";
+					}
+				}
+			} else {
+				return "Variable input is higher than maximum occupancy "
+						+ "/ has 0 / has negative value";
+			}
+		} else {
+			return "Variable input must be a number";
+		}
 		return null;
 	}
 
-	public void removeCar(int parkingLotNumber) {
-		System.out.println("Slot number " + parkingLotNumber + " is free");
-	}
-
-	public ParkingLot[] checkStatus() {
+	public String checkStatus() {
 		return null;
 	}
 

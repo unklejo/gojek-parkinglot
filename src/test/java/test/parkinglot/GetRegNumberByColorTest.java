@@ -10,35 +10,35 @@ public class GetRegNumberByColorTest {
 	public void testGetRegNumberByColorParkingLotNotCreated() {
 		ParkingLotService service = new ParkingLotService();
 		Assert.assertEquals("Parking lot has not been created yet",
-				service.test("registration_numbers_for_cars_with_colour White"));
+				service.execute("registration_numbers_for_cars_with_colour White"));
 	}
 
 	@Test
 	public void testGetRegNumberByColorNotFound() {
 		ParkingLotService service = new ParkingLotService();
-		service.test("create_parking_lot 1"); 
-		Assert.assertEquals("Registration number of car with color: White not found",
-				service.test("registration_numbers_for_cars_with_colour White"));
+		service.execute("create_parking_lot 1"); 
+		Assert.assertEquals("Not found",
+				service.execute("registration_numbers_for_cars_with_colour White"));
 	}
 
 	@Test
 	public void testGetRegNumberByColorFoundOne() {
 		ParkingLotService service = new ParkingLotService();
-		service.test("create_parking_lot 1");
-		service.test("park aaa White");
+		service.execute("create_parking_lot 1");
+		service.execute("park aaa White");
 		Assert.assertEquals("aaa",
-				service.test("registration_numbers_for_cars_with_colour White"));
+				service.execute("registration_numbers_for_cars_with_colour White"));
 	}
 	
 	@Test
 	public void testGetRegNumberByColorFoundMoreThanOne() {
 		ParkingLotService service = new ParkingLotService();
-		service.test("create_parking_lot 3");
-		service.test("park aaa White");
-		service.test("park bbb Black");
-		service.test("park ccc White");
+		service.execute("create_parking_lot 3");
+		service.execute("park aaa White");
+		service.execute("park bbb Black");
+		service.execute("park ccc White");
 		Assert.assertEquals("aaa, ccc",
-				service.test("registration_numbers_for_cars_with_colour White"));
+				service.execute("registration_numbers_for_cars_with_colour White"));
 	}
 
 }

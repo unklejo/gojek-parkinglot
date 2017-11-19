@@ -108,7 +108,7 @@ public class ParkingLotService {
 			}
 			return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
 					temp.length() - 2) : temp)
-					: ("Registration number of car with color: " + varInput + " not found");
+					: "Not found";
 		} else {
 			return "Parking lot has not been created yet";
 		}
@@ -125,8 +125,7 @@ public class ParkingLotService {
 				}
 			}
 			return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
-					temp.length() - 2) : temp) : ("Slot number of car with color: "
-					+ varInput + " not found");
+					temp.length() - 2) : temp) : "Not found";
 		} else {
 			return "Parking lot has not been created yet";
 		}
@@ -141,21 +140,20 @@ public class ParkingLotService {
 					return String.valueOf(parkingLots[i].getSlotNumber());
 				}
 			}
-			return "Slot number of car with registration number: " + varInput
-					+ " not found";
+			return "Not found";
 		} else {
 			return "Parking lot has not been created yet";
 		}
 	}
 
-	public String test(String scannedInput) {
+	public String execute(String scannedInput) {
 		if (scannedInput.startsWith("create_parking_lot")) {
 			return createParkingLot(getVarInput(scannedInput, "create_parking_lot"));
 		} else if (scannedInput.startsWith("park")) {
 			return registerCar(getVarInput(scannedInput, "park"));
 		} else if (scannedInput.startsWith("leave")) {
 			return removeCar(getVarInput(scannedInput, "leave"));
-		} else if (scannedInput.startsWith("Status")) {
+		} else if (scannedInput.startsWith("status")) {
 			return checkStatus();
 		} else if (scannedInput
 				.startsWith("registration_numbers_for_cars_with_colour")) {

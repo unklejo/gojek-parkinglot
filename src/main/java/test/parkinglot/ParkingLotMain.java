@@ -1,72 +1,42 @@
 package test.parkinglot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ParkingLotMain {
 
 	public static void main(String[] args) {
-		new ParkingLotMain();
+		if (args.length > 0) {
+			File file = new File(args[0]);
+			try {
+				new ParkingLotMain(new Scanner(file), false);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			new ParkingLotMain(new Scanner(System.in), true);
+		}
 	}
 
-	public ParkingLotMain() {
-		Scanner scanner = null;
+	public ParkingLotMain(Scanner scanner, boolean isCommandLine) {
 		boolean stop = false;
 		ParkingLotService service = new ParkingLotService();
+		System.out.print("\n\n");
 		while (!stop) {
-			System.out.println("Input:");
-			scanner = new Scanner(System.in);
+			if (isCommandLine)
+				System.out.println("Input:");
 			String scannedInput = scanner.nextLine();
-
-			String question;
-			String response = "";
-
-			if (scannedInput.startsWith("create_parking_lot")) {
-				question = "create_parking_lot";
-				response = service.createParkingLot(service.getVarInput(
-						scannedInput, question));
-			} else if (scannedInput.startsWith("park")) {
-				// park KA-01-HH-1234 White
-				question = "park";
-				response = service.registerCar(service.getVarInput(
-						scannedInput, question));
-			} else if (scannedInput.startsWith("leave")) {
-				// leave 4
-				question = "leave";
-				response = service.removeCar(service.getVarInput(scannedInput,
-						question));
-				// else
-			} else if (scannedInput.startsWith("Status")) {
-				// Status
-				response = service.checkStatus();
-			} else if (scannedInput
-					.startsWith("registration_numbers_for_cars_with_colour")) {
-				// registration_numbers_for_cars_with_colour White
-				question = "registration_numbers_for_cars_with_colour";
-				response = service.getRegistrationNumbersByColor(service
-						.getVarInput(scannedInput, question));
-			} else if (scannedInput
-					.startsWith("slot_numbers_for_cars_with_colour")) {
-				// slot_numbers_for_cars_with_colour White
-				question = "slot_numbers_for_cars_with_colour";
-				response = service.getSlotNumbersByColor(service.getVarInput(
-						scannedInput, question));
-			} else if (scannedInput
-					.startsWith("slot_number_for_registration_number")) {
-				// slot_number_for_registration_number KA-01-HH-3141
-				question = "slot_number_for_registration_number";
-				response = service.getSlotNumbersByRegistrationNumber(service
-						.getVarInput(scannedInput, question));
-			} else if (scannedInput.equals("exit")
-					|| scannedInput.equals("quit")) {
-				stop = true;
-				response = "Quitting application. See you later.";
+			String response = service.execute(scannedInput);
+			if (isCommandLine) {
+				System.out.println("Output:\n" + response);
+				if (scannedInput.equals("exit") || scannedInput.equals("quit"))
+					stop = true;
 			} else {
-				response = "Command not recognized. Try again.";
+				System.out.println(response);
+				if (!scanner.hasNext())
+					stop = true;
 			}
-
-			System.out.println("Output:");
-			System.out.println(response);
-			System.out.println("");
 		}
 
 		if (scanner != null)

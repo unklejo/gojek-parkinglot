@@ -141,9 +141,11 @@ public class ParkingLotService {
 					return String.valueOf(parkingLots[i].getSlotNumber());
 				}
 			}
+			return "Slot number of car with registration number: " + varInput
+					+ " not found";
+		} else {
+			return "Parking lot has not been created yet";
 		}
-		return "Slot number of car with registration number: " + varInput
-				+ " not found";
 	}
 
 	public String test(String scannedInput) {

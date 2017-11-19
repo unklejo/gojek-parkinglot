@@ -1,6 +1,7 @@
 package test.parkinglot.domain;
 
 public enum Color {
+	// for greater list, add color of your choice
 	WHITE("White"),
 	BLACK("Black"),
 	BLUE("Blue"),

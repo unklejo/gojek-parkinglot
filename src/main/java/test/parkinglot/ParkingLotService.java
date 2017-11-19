@@ -20,7 +20,7 @@ public class ParkingLotService {
 					parkingLots[i] = parkingLot;
 				}
 				return "Created a parking lot with " + parkingLotQuantity
-						+ " slots";
+						+ " slot" + (parkingLotQuantity > 1 ? "s" : "");
 			} else {
 				return "Parking lot is already created with "
 						+ parkingLots.length + " slot"
@@ -35,15 +35,19 @@ public class ParkingLotService {
 	public String registerCar(String varInput) {
 		String[] inputs = varInput.split("\\s");
 		if (inputs.length == 2) {
-			for (int i = 0; i < parkingLots.length; i++) {
-				if (parkingLots[i].getCar() == null) {
-					parkingLots[i].setCar(new Car(inputs[0], Color
-							.getColor(inputs[1])));
-					return "Allocated slot number: "
-							+ parkingLots[i].getSlotNumber();
+			if (parkingLots != null) {
+				for (int i = 0; i < parkingLots.length; i++) {
+					if (parkingLots[i].getCar() == null) {
+						parkingLots[i].setCar(new Car(inputs[0], Color
+								.getColor(inputs[1])));
+						return "Allocated slot number: "
+								+ parkingLots[i].getSlotNumber();
+					}
 				}
+				return "Sorry, parking lot is full";
+			} else {
+				return "Parking lot has not been created yet";
 			}
-			return "Sorry, parking lot is full";
 		} else {
 			return "Variable input must contains exact 2 premises";
 		}
@@ -52,18 +56,22 @@ public class ParkingLotService {
 	public String removeCar(String varInput) {
 		if (varInput.matches(pattern)) {
 			int toBeRemovedSlotNumber = Integer.parseInt(varInput);
-			if (toBeRemovedSlotNumber > 0
-					&& toBeRemovedSlotNumber <= parkingLots.length) {
-				for (int i = 0; i < parkingLots.length; i++) {
-					if (parkingLots[i].getSlotNumber() == toBeRemovedSlotNumber) {
-						parkingLots[i].setCar(null);
-						return "Slot number " + toBeRemovedSlotNumber
-								+ " is free";
+			if (parkingLots != null) {
+				if (toBeRemovedSlotNumber > 0
+						&& toBeRemovedSlotNumber <= parkingLots.length) {
+					for (int i = 0; i < parkingLots.length; i++) {
+						if (parkingLots[i].getSlotNumber() == toBeRemovedSlotNumber) {
+							parkingLots[i].setCar(null);
+							return "Slot number " + toBeRemovedSlotNumber
+									+ " is free";
+						}
 					}
+				} else {
+					return "Variable input is higher than maximum occupancy "
+							+ "/ has 0 / has negative value";
 				}
 			} else {
-				return "Variable input is higher than maximum occupancy "
-						+ "/ has 0 / has negative value";
+				return "Parking lot has not been created yet";
 			}
 		} else {
 			return "Variable input must be a number";

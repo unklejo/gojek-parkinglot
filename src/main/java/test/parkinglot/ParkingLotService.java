@@ -124,10 +124,12 @@ public class ParkingLotService {
 					temp += parkingLots[i].getSlotNumber() + ", ";
 				}
 			}
+			return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
+					temp.length() - 2) : temp) : ("Slot number of car with color: "
+					+ varInput + " not found");
+		} else {
+			return "Parking lot has not been created yet";
 		}
-		return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
-				temp.length() - 2) : temp) : ("Slot number of car with color: "
-				+ varInput + " not found");
 	}
 
 	public String getSlotNumbersByRegistrationNumber(String varInput) {

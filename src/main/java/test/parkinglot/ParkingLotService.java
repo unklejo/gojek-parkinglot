@@ -106,10 +106,12 @@ public class ParkingLotService {
 							+ ", ";
 				}
 			}
+			return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
+					temp.length() - 2) : temp)
+					: ("Registration number of car with color: " + varInput + " not found");
+		} else {
+			return "Parking lot has not been created yet";
 		}
-		return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
-				temp.length() - 2) : temp)
-				: ("Registration number of car with color: " + varInput + " not found");
 	}
 
 	public String getSlotNumbersByColor(String varInput) {

@@ -1,29 +1,19 @@
 package test.parkinglot.domain;
 
 public enum Color {
-	WHITE(1,"White"),
-	BLACK(2,"Black"),
-	BLUE(3,"Blue"),
-	GREEN(4,"Green"),
-	RED(5,"Red"),
-	YELLOW(6,"Yellow"),
-	SILVER(7,"Silver"),
-	OTHERS(0,"Others");
+	WHITE("White"),
+	BLACK("Black"),
+	BLUE("Blue"),
+	GREEN("Green"),
+	RED("Red"),
+	YELLOW("Yellow"),
+	SILVER("Silver"),
+	OTHERS("Others");
 	
-	private int intVal;
 	private String stringVal;
 	
-	Color(int intVal, String stringVal) {
-		this.intVal = intVal;
+	Color(String stringVal) {
 		this.stringVal = stringVal;
-	}
-
-	public int getIntVal() {
-		return intVal;
-	}
-
-	public void setIntVal(int intVal) {
-		this.intVal = intVal;
 	}
 
 	public String getStringVal() {

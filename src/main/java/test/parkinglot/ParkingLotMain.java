@@ -53,20 +53,20 @@ public class ParkingLotMain {
 					.startsWith("registration_numbers_for_cars_with_colour")) {
 				// registration_numbers_for_cars_with_colour White
 				question = "registration_numbers_for_cars_with_colour";
-				getRegistrationNumbersByColor(Color.getColor(getVarInput(
-						scannedInput, question)));
+				response = getRegistrationNumbersByColor(getVarInput(
+						scannedInput, question));
 			} else if (scannedInput
 					.startsWith("slot_numbers_for_cars_with_colour")) {
 				// slot_numbers_for_cars_with_colour White
 				question = "slot_numbers_for_cars_with_colour";
-				getSlotNumbersByColor(Color.getColor(getVarInput(scannedInput,
-						question)));
+				response = getSlotNumbersByColor(getVarInput(scannedInput,
+						question));
 			} else if (scannedInput
 					.startsWith("slot_number_for_registration_number")) {
 				// slot_number_for_registration_number KA-01-HH-3141
 				question = "slot_number_for_registration_number";
-				getSlotNumbersByRegistrationNumber(getVarInput(scannedInput,
-						question));
+				response = getSlotNumbersByRegistrationNumber(getVarInput(
+						scannedInput, question));
 			} else if (scannedInput.equals("exit")
 					|| scannedInput.equals("quit")) {
 				stop = true;
@@ -77,6 +77,7 @@ public class ParkingLotMain {
 
 			System.out.println("Output:");
 			System.out.println(response);
+			System.out.println("");
 		}
 
 		if (scanner != null)
@@ -155,28 +156,59 @@ public class ParkingLotMain {
 			for (int i = 0; i < parkingLots.length; i++) {
 				if (parkingLots[i].getCar() != null) {
 					temp += parkingLots[i].getSlotNumber() + " | ";
-					temp += parkingLots[i].getCar().getRegistrationNumber() + " | ";
-					temp += parkingLots[i].getCar().getColor().getStringVal() + "\n";
+					temp += parkingLots[i].getCar().getRegistrationNumber()
+							+ " | ";
+					temp += parkingLots[i].getCar().getColor().getStringVal()
+							+ "\n";
 				}
 			}
 		}
 		return temp;
 	}
 
-	public List<String> getRegistrationNumbersByColor(Color color) {
-		return null;
+	public String getRegistrationNumbersByColor(String varInput) {
+		Color color = Color.getColor(varInput);
+		String temp = "";
+		if (parkingLots != null) {
+			for (int i = 0; i < parkingLots.length; i++) {
+				if (parkingLots[i].getCar() != null
+						&& parkingLots[i].getCar().getColor().equals(color)) {
+					temp += parkingLots[i].getCar().getRegistrationNumber()
+							+ ", ";
+				}
+			}
+		}
+		return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
+				temp.length() - 2) : temp)
+				: ("Registration number of car with color: " + varInput + " not found");
 	}
 
-	public List<Integer> getSlotNumbersByColor(Color color) {
-		return null;
+	public String getSlotNumbersByColor(String varInput) {
+		Color color = Color.getColor(varInput);
+		String temp = "";
+		if (parkingLots != null) {
+			for (int i = 0; i < parkingLots.length; i++) {
+				if (parkingLots[i].getCar() != null
+						&& parkingLots[i].getCar().getColor().equals(color)) {
+					temp += parkingLots[i].getSlotNumber() + ", ";
+				}
+			}
+		}
+		return temp.length() > 0 ? (temp.endsWith(", ") ? temp.substring(0,
+				temp.length() - 2) : temp) : ("Slot number of car with color: "
+				+ varInput + " not found");
 	}
 
-	public int getSlotNumbersByRegistrationNumber(String registrationNumber) {
-		return 0;
-		/*
-		 * Input: slot_number_for_registration_number MH-04-AY-1111 Output: Not
-		 * found
-		 */
+	public String getSlotNumbersByRegistrationNumber(String varInput) {
+		if (parkingLots != null) {
+			for (int i = 0; i < parkingLots.length; i++) {
+				if (parkingLots[i].getCar() != null
+						&& parkingLots[i].getCar().getRegistrationNumber()
+								.equals(varInput)) {
+					return String.valueOf(parkingLots[i].getSlotNumber());
+				}
+			}
+		}
+		return "Slot number of car with registration number: " + varInput + " not found";
 	}
-
 }

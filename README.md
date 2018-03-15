@@ -1,3 +1,2 @@
 # parkinglot
-Parking Lot System
-Used for Gojek Initial Test
+Parking Lot System simple application
